@@ -35,3 +35,7 @@ yarn dev
 ```
 npm dev
 ```
+## Screenshots
+![Add user](https://raw.githubusercontent.com/extenv/cruds_express/main/screenshots/003.png)
+
+![Kopichan user added](https://raw.githubusercontent.com/extenv/cruds_express/main/screenshots/004.png)
