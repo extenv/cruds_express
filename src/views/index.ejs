@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="/css/style.css">
+    <title>CRUD Sederhana</title>
+</head>
+<body>
+    <div class="container mx-auto">
+           <div class=" w-full flex justify-center items-center ">
+               <div class="max-w-xl px-2 py-10 sm:py-24 w-full space-y-5">
+                <div class="flex justify-between items-center w-full">
+                    <span class="text-2xl text-gray-700">Data Users (<%- database.length %>)</span>
+                    <button onclick="location.href='/tambah'" class="px-4 py-2 rounded focus:outline-none bg-blue-500 hover:bg-blue-700 text-white">
+                        + Tambah
+                    </button>
+                </div>
+                <hr>
+                <div class="w-full flex flex-col justify-center items-center space-y-5">
+                    <!-- Gunakan metode GET untuk fitur pencarian -->
+                   <form action="/" method="get" class="w-full">
+                    <input id="cari" name="cari" placeholder="Cari User Disini.." type="text" class="w-full py-4 pl-4 border shadow rounded focus:outline-none">
+                   </form>
+                <% if(tambah.length > 0 ) {%> 
+                    <div class="flex bg-green-100 w-full rounded-lg p-4 mb-4 text-sm text-green-700" role="alert">
+                        <svg class="w-5 h-5 inline mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                        <div>
+                            <span class="font-medium">Info :</span> <%- tambah %>
+                        </div>
+                    </div>
+                    <% } %> 
+                    <% if(ubah.length > 0 ) {%> 
+                        <div class="flex bg-green-100 w-full rounded-lg p-4 mb-4 text-sm text-green-700" role="alert">
+                            <svg class="w-5 h-5 inline mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                            <div>
+                                <span class="font-medium">Info :</span> <%- ubah %>
+                            </div>
+                        </div>
+                        <% } %> 
+                        <% if(hapus.length > 0 ) {%> 
+                            <div class="flex bg-green-100 w-full rounded-lg p-4 mb-4 text-sm text-green-700" role="alert">
+                                <svg class="w-5 h-5 inline mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                                <div>
+                                    <span class="font-medium">Info :</span> <%- hapus %>
+                                </div>
+                            </div>
+                            <% } %> 
+                    <!-- Ditampikan jika properti database bernilai -->
+                    <% if(database.length > 0){%>
+                        <!-- Memanggil properti database dan menampilkannya -->
+                        <!-- Fungsi forEach hany berlaku untuk properti berupa function -->
+                        <% database.forEach(function(tampilkan){%> 
+                            <div class="w-full px-2 py-3  shadow rounded border flex flex-col sm:flex-row ">
+                                <img src="/images/<%- tampilkan.photo  %>" alt="images" class="w-full sm:w-32 max-h-screen rounded object-fill ">
+                              <div class="w-full h-full flex justify-start flex-col items-start pl-2 sm:py-0 py-2">
+                                  <div>Nomor ID : <%- tampilkan.id  %></div>
+                                  <div>Nama : <%- tampilkan.name  %></div>
+                                  <div>Dibuat : <%- moment(tampilkan.create_at).format('LLLL'); %></div>
+                                     <% if(tampilkan.update_at == "0000-00-00 00:00:00") {%>
+                                        <div>Terakhir diubah : Belum ada perubahan</div>
+                                    <% }else {%>
+                                        <div>Terakhir diubah : <%- moment(tampilkan.update_at).format('LLLL'); %></div>
+                                    <% } %> 
+                                  <div class="flex flex-row justify-center sm:justify-end items-center w-full space-x-5  mt-2">
+                                      <button onclick="location.href='/ubah/<%- tampilkan.id %>'" class="px-4 py-2 rounded focus:outline-none bg-blue-500 hover:bg-blue-700 text-white">
+                                          Ubah
+                                      </button>
+                                    <form action="/hapus/<%- tampilkan.id %>" method="post">
+                                        <button type="submit" class="px-4 py-2 rounded focus:outline-none bg-red-500 hover:bg-red-700 text-white">
+                                            Hapus
+                                         </button>
+                                    </form>
+                                  </div>
+                              </div>
+                           </div>
+                        <% }) %> 
+                    <% } %> 
+                    <!-- Ditampikan jika properti database tidak bernilai -->
+                    <% if(database.length == 0){%>
+                        <div class="w-full flex justify-center mt-24 items-center">
+                            Data users dari database tidak ditemukan
+                        </div>
+                     <% } %> 
+                </div>
+               </div>
+           </div>
+    </div>
+</body>
+</html>

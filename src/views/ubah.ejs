@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Ubah Users</title>
+</head>
+<body>
+    <div class="container mx-auto">
+        <div class=" w-full flex justify-center items-center ">
+            <div class="max-w-xl px-2 py-10 sm:py-24 w-full ">
+             <form action="/ubah/<%- id %>" method="post" class="w-full h-full flex flex-col justify-center items-start  bg-gray-100 p-2 sm:p-5 rounded shadow-sm border" enctype="multipart/form-data">
+                <span class="text-2xl text-gray-700">Ubah Users</span>
+                <h3 class="text-md font-normal mt-5">Foto <span class="text-red-500">*</span></h3>
+                <div class="flex w-full flex-col justify-center items-center space-y-2">
+                    <img src="/images/<%- photo %>" alt="Photo" name="preview" id="preview" class=" w-full h-full rounded ">
+                    <label class="text-sm p-2 cursor-pointer w-full  text-center rounded font-semibold bg-gray-400 hover:bg-gray-500 text-white ">
+                        <input type="file" class="sr-only" name="photo" id="photo"
+                        accept="image/*" onchange="loadFile(event)">
+                        <span> Pilih foto</span>
+                      </label>
+                </div>
+                <h3 class="text-md font-normal mt-5">Nama <span class="text-red-500">*</span></h3>
+                <input id="nama" name="nama" value="<%- name %>" class="w-full mb-5 focus:outline-none rounded py-3 pl-4 bg-white shadow" placeholder="Masukkan nama" type="text" maxlength="50" required>
+                <button type="submit" class="px-5 py-2 rounded focus:outline-none bg-blue-500 hover:bg-blue-700 text-white">Submit</button>
+             </form>
+            </div>
+        </div>
+ </div>
+</body>>
+<script>
+  var loadFile = function(event) {
+    var reader = new FileReader();
+    reader.onload = function(){
+      var output = document.getElementById('preview');
+      output.src = reader.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+  };
+</script>
+</html>
